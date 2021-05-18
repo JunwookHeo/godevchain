@@ -7,15 +7,17 @@ import (
 )
 
 func main() {
-	chain := block.InitBlockChain()
+	c := block.InitChain()
+	c.AddBlock("First Block after Genesis")
+	c.AddBlock("Second Block after Genesis")
+	c.AddBlock("Third Block after Genesis")
 
-	chain.AddBlock("First Block after Genesis")
-	chain.AddBlock("Second Block after Genesis")
-	chain.AddBlock("Third Block after Genesis")
-
-	for _, block := range chain.Blocks {
-		fmt.Printf("Previous Hash: %x\n", block.PreHash)
-		fmt.Printf("Hash: %x\n", block.Hash)
-		fmt.Printf("Data in Block: %s\n", block.Data)
+	for e := c.Blocks.Front(); e != nil; e = e.Next() {
+		// do something with e.Value
+		b, _ := e.Value.(*block.Block)
+		fmt.Printf("Previous Hash: %x\n", b.PreHash)
+		fmt.Printf("Hash: %x\n", b.Hash)
+		fmt.Printf("Data in Block: %s\n", b.Data)
 	}
+
 }

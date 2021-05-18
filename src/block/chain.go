@@ -1,15 +1,21 @@
 package block
 
-type BlockChain struct {
-	Blocks []*Block
+import (
+	"container/list"
+)
+
+type Chain struct {
+	Blocks *list.List
 }
 
-func (c *BlockChain) AddBlock(data string) {
-	pb := c.Blocks[len(c.Blocks)-1]
+func (c *Chain) AddBlock(data string) {
+	pb, _ := c.Blocks.Back().Value.(*Block)
 	new := CreateBlock(data, pb.Hash)
-	c.Blocks = append(c.Blocks, new)
+	c.Blocks.PushBack(new)
 }
 
-func InitBlockChain() *BlockChain {
-	return &BlockChain{[]*Block{Genesis()}}
+func InitChain() *Chain {
+	c := Chain{list.New()}
+	c.Blocks.PushBack(Genesis())
+	return &c
 }
