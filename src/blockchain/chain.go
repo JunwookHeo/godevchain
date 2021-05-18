@@ -1,4 +1,4 @@
-package block
+package blockchain
 
 import (
 	"container/list"
@@ -9,7 +9,7 @@ type Chain struct {
 }
 
 func (c *Chain) AddBlock(data string) {
-	pb, _ := c.Blocks.Back().Value.(*Block)
+	pb, _ := c.Blocks.Back().Value.(Block)
 	new := CreateBlock(data, pb.Hash)
 	c.Blocks.PushBack(new)
 }
