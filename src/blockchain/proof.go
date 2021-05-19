@@ -10,6 +10,17 @@ import (
 	"math/big"
 )
 
+// Take the data from the block
+
+// create a counter (nonce) which starts at 0
+
+// create a hash of the data plus the counter
+
+// check the hash to see if it meets a set of requirements
+
+// Requirements:
+// The First few bytes must contain 0s
+
 const Difficulty = 18
 
 type ProofOfWork struct {
@@ -29,10 +40,10 @@ func NewProof(b *Block) *ProofOfWork {
 func (pow *ProofOfWork) InitData(nonce int) []byte {
 	data := bytes.Join(
 		[][]byte{
-			ToHex(int64(nonce)),
-			ToHex(int64(Difficulty)),
 			pow.Block.PrevHash,
 			pow.Block.Data,
+			ToHex(int64(nonce)),
+			ToHex(int64(Difficulty)),
 		},
 		[]byte{},
 	)
@@ -50,16 +61,17 @@ func (pow *ProofOfWork) Run() (int, []byte) {
 		data := pow.InitData(nonce)
 		hash = sha256.Sum256(data)
 
+		// fmt.Printf("\r%x", hash)
 		intHash.SetBytes(hash[:])
 
-		if intHash.Cmp(pow.Target) == -1 { // intHash < Target
+		if intHash.Cmp(pow.Target) == -1 {
 			break
 		} else {
 			nonce++
 		}
 
 	}
-	fmt.Printf("%d:%x\n", nonce, hash)
+	fmt.Println()
 
 	return nonce, hash[:]
 }
