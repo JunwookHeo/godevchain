@@ -33,7 +33,7 @@ func DBexists() bool {
 	return true
 }
 
-func ContinueBlockChain() *BlockChain {
+func ContinueBlockChain(address string) *BlockChain {
 	if DBexists() == false {
 		fmt.Println("No existing blockchain found, create one!")
 		runtime.Goexit()
@@ -42,7 +42,6 @@ func ContinueBlockChain() *BlockChain {
 	var lastHash []byte
 
 	opts := badger.DefaultOptions(dbPath)
-	opts = opts.WithLoggingLevel(badger.ERROR)
 
 	db, err := badger.Open(opts)
 	Handle(err)
@@ -70,7 +69,6 @@ func InitBlockChain(address string) *BlockChain {
 	}
 
 	opts := badger.DefaultOptions(dbPath)
-	opts = opts.WithLoggingLevel(badger.ERROR)
 
 	db, err := badger.Open(opts)
 	Handle(err)
