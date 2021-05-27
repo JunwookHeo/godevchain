@@ -1,0 +1,146 @@
+INFO : 2021/05/27 14:42:25 bclog.go:35: Info Test 20
+WARN : 2021/05/27 14:42:25 bclog.go:38: Warning
+ERROR: 2021/05/27 14:42:25 bclog.go:41: Error
+PANIC: 2021/05/27 14:42:25 bclog.go:44: Panic
+INFO : 2021/05/27 14:59:15 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 14:59:15 bclog_test.go:12: Warning
+ERROR: 2021/05/27 14:59:15 bclog_test.go:13: Error
+PANIC: 2021/05/27 14:59:15 bclog_test.go:15: Panic
+INFO : 2021/05/27 14:59:39 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 14:59:39 bclog_test.go:12: Warning
+ERROR: 2021/05/27 14:59:39 bclog_test.go:13: Error
+INFO : 2021/05/27 15:00:15 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 15:00:15 bclog_test.go:12: Warning
+ERROR: 2021/05/27 15:00:15 bclog_test.go:13: Error
+INFO : 2021/05/27 15:02:16 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 15:02:16 bclog_test.go:12: Warning
+ERROR: 2021/05/27 15:02:16 bclog_test.go:13: Error
+FATAL: 2021/05/27 15:02:16 bclog_test.go:15: Fatal
+INFO : 2021/05/27 15:08:21 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 15:08:21 bclog_test.go:12: Warning
+ERROR: 2021/05/27 15:08:21 bclog_test.go:13: Error
+FATAL: 2021/05/27 15:08:21 bclog_test.go:15: Fatal
+INFO : 2021/05/27 15:23:59 bclog_test.go:11: InfoTest20
+WARN : 2021/05/27 15:23:59 bclog_test.go:12: Warning
+ERROR: 2021/05/27 15:23:59 bclog_test.go:13: Error
+FATAL: 2021/05/27 15:23:59 bclog_test.go:15: Fatal
+INFO : 2021/05/27 15:28:43 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:28:43 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:28:43 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:28:43 bclog_test.go:14: Error
+FATAL: 2021/05/27 15:28:43 bclog_test.go:16: Fatal
+INFO : 2021/05/27 15:29:57 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:29:57 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:29:57 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:29:57 bclog_test.go:14: Error
+FATAL: 2021/05/27 15:29:57 bclog_test.go:16: Fatal
+INFO : 2021/05/27 15:31:05 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:31:05 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:31:05 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:31:05 bclog_test.go:14: Error
+FATAL: 2021/05/27 15:31:05 bclog_test.go:16: Fatal
+INFO : 2021/05/27 15:31:52 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:31:52 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:31:52 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:31:52 bclog_test.go:14: Error
+INFO : 2021/05/27 15:31:57 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:31:57 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:31:57 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:31:57 bclog_test.go:14: Error
+INFO : 2021/05/27 15:33:31 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:33:31 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:33:31 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:33:31 bclog_test.go:14: Error
+INFO : 2021/05/27 15:35:20 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:35:20 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:35:20 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:35:20 bclog_test.go:14: Error
+INFO : 2021/05/27 15:35:45 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:35:45 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:35:45 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:35:45 bclog_test.go:14: Error
+INFO : 2021/05/27 15:36:17 bclog_test.go:11: InfoTest20
+INFO : 2021/05/27 15:36:17 bclog_test.go:12: Starting Node 20
+WARN : 2021/05/27 15:36:17 bclog_test.go:13: Warning
+ERROR: 2021/05/27 15:36:17 bclog_test.go:14: Error
+INFO : 2021/05/27 15:39:41 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:39:41 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:39:41 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:39:41 bclog_test.go:18: Error
+INFO : 2021/05/27 15:41:15 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:41:15 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:41:15 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:41:15 bclog_test.go:18: Error
+INFO : 2021/05/27 15:41:48 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:41:48 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:41:48 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:41:48 bclog_test.go:18: Error
+INFO : 2021/05/27 15:42:17 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:42:17 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:42:17 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:42:17 bclog_test.go:18: Error
+INFO : 2021/05/27 15:43:00 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:43:00 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:43:00 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:43:00 bclog_test.go:18: Error
+INFO : 2021/05/27 15:44:14 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:44:14 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:44:14 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:44:14 bclog_test.go:18: Error
+INFO : 2021/05/27 15:47:35 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:47:35 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:47:35 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:47:35 bclog_test.go:18: Error
+INFO : 2021/05/27 15:48:07 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:48:07 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:48:07 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:48:07 bclog_test.go:18: Error
+INFO : 2021/05/27 15:49:42 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:49:42 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:49:42 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:49:42 bclog_test.go:18: Error
+INFO : 2021/05/27 15:49:50 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:49:50 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:49:50 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:49:50 bclog_test.go:18: Error
+INFO : 2021/05/27 15:51:51 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:51:51 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:51:51 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:51:51 bclog_test.go:18: Error
+INFO : 2021/05/27 15:52:32 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:52:32 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:52:32 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:52:32 bclog_test.go:18: Error
+INFO : 2021/05/27 15:52:56 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:52:56 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:52:56 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:52:56 bclog_test.go:18: Error
+INFO : 2021/05/27 15:53:31 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:53:31 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:53:31 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:53:31 bclog_test.go:18: Error
+INFO : 2021/05/27 15:53:41 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:53:41 bclog_test.go:16: Starting Node [7830]
+WARN : 2021/05/27 15:53:41 bclog_test.go:17: Warning
+ERROR: 2021/05/27 15:53:41 bclog_test.go:18: Error
+INFO : 2021/05/27 15:55:20 bclog_test.go:15: InfoTest20
+INFO : 2021/05/27 15:55:20 bclog_test.go:16: Info Test [7830]
+WARN : 2021/05/27 15:55:20 bclog_test.go:17: Warning
+INFO : 2021/05/27 15:55:20 bclog_test.go:18: Warning Test [7830]
+ERROR: 2021/05/27 15:55:20 bclog_test.go:19: Error
+INFO : 2021/05/27 15:55:20 bclog_test.go:20: Error Test [7830]
+FATAL: 2021/05/27 15:55:20 bclog_test.go:22: Fatal
+INFO : 2021/05/27 15:55:55 bclog_test.go:12: InfoTest20
+INFO : 2021/05/27 15:55:55 bclog_test.go:13: Info Test 20
+WARN : 2021/05/27 15:55:55 bclog_test.go:14: Warning
+INFO : 2021/05/27 15:55:55 bclog_test.go:15: Warning Test 20
+ERROR: 2021/05/27 15:55:55 bclog_test.go:16: Error
+INFO : 2021/05/27 15:55:55 bclog_test.go:17: Error Test 20
+FATAL: 2021/05/27 15:55:55 bclog_test.go:19: Fatal
+INFO : 2021/05/27 15:56:10 bclog_test.go:12: InfoTest20
+INFO : 2021/05/27 15:56:10 bclog_test.go:13: Info Test 20
+WARN : 2021/05/27 15:56:10 bclog_test.go:14: Warning
+INFO : 2021/05/27 15:56:10 bclog_test.go:15: Warning Test 20
+ERROR: 2021/05/27 15:56:10 bclog_test.go:16: Error
+INFO : 2021/05/27 15:56:10 bclog_test.go:17: Error Test 20
+FATAL: 2021/05/27 15:56:10 bclog_test.go:20: Fatal Test 20

@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"strconv"
 
+	"github.com/JunwookHeo/godevchain/bclogger"
 	"github.com/JunwookHeo/godevchain/blockchain"
 	"github.com/JunwookHeo/godevchain/network"
 	"github.com/JunwookHeo/godevchain/wallet"
@@ -35,13 +36,13 @@ func (cli *CommandLine) validateArgs() {
 }
 
 func (cli *CommandLine) StartNode(nodeID, minerAddress string) {
-	fmt.Printf("Starting Node %s\n", nodeID)
+	bclogger.INFOMSGF("Starting Node %s\n", nodeID)
 
 	if len(minerAddress) > 0 {
 		if wallet.ValidateAddress(minerAddress) {
-			fmt.Println("Mining is on. Address to receive rewards: ", minerAddress)
+			bclogger.INFOMSG("Mining is on. Address to receive rewards: ", minerAddress)
 		} else {
-			log.Panic("Wrong miner address!")
+			bclogger.FATALMSG("Wrong miner address!")
 		}
 	}
 	network.StartServer(nodeID, minerAddress)
@@ -54,7 +55,7 @@ func (cli *CommandLine) reindexUTXO(nodeID string) {
 	UTXOSet.Reindex()
 
 	count := UTXOSet.CountTransactions()
-	fmt.Printf("Done! There are %d transactions in the UTXO set.\n", count)
+	bclogger.INFOMSGF("Done! There are %d transactions in the UTXO set.\n", count)
 }
 
 func (cli *CommandLine) listAddresses(nodeID string) {
@@ -62,7 +63,7 @@ func (cli *CommandLine) listAddresses(nodeID string) {
 	addresses := wallets.GetAllAddresses()
 
 	for _, address := range addresses {
-		fmt.Println(address)
+		bclogger.INFOMSG(address)
 	}
 
 }
@@ -72,7 +73,7 @@ func (cli *CommandLine) createWallet(nodeID string) {
 	address := wallets.AddWallet()
 	wallets.SaveFile(nodeID)
 
-	fmt.Printf("New address is: %s\n", address)
+	bclogger.INFOMSGF("New address is: %s\n", address)
 }
 
 func (cli *CommandLine) printChain(nodeID string) {
@@ -100,7 +101,7 @@ func (cli *CommandLine) printChain(nodeID string) {
 
 func (cli *CommandLine) createBlockChain(address, nodeID string) {
 	if !wallet.ValidateAddress(address) {
-		log.Panic("Address is not Valid")
+		bclogger.FATALMSG("Address is not Valid")
 	}
 	chain := blockchain.InitBlockChain(address, nodeID)
 	defer chain.Database.Close()
@@ -108,12 +109,12 @@ func (cli *CommandLine) createBlockChain(address, nodeID string) {
 	UTXOSet := blockchain.UTXOSet{Blockchain: chain}
 	UTXOSet.Reindex()
 
-	fmt.Println("Finished!")
+	bclogger.INFOMSG("Finished!")
 }
 
 func (cli *CommandLine) getBalance(address, nodeID string) {
 	if !wallet.ValidateAddress(address) {
-		log.Panic("Address is not Valid")
+		bclogger.FATALMSG("Address is not Valid")
 	}
 	chain := blockchain.ContinueBlockChain(nodeID)
 	UTXOSet := blockchain.UTXOSet{Blockchain: chain}
@@ -128,15 +129,15 @@ func (cli *CommandLine) getBalance(address, nodeID string) {
 		balance += out.Value
 	}
 
-	fmt.Printf("Balance of %s: %d\n", address, balance)
+	bclogger.INFOMSGF("Balance of %s: %d\n", address, balance)
 }
 
 func (cli *CommandLine) send(from, to string, amount int, nodeID string, mineNow bool) {
 	if !wallet.ValidateAddress(to) {
-		log.Panic("Address is not Valid")
+		bclogger.FATALMSG("Address is not Valid")
 	}
 	if !wallet.ValidateAddress(from) {
-		log.Panic("Address is not Valid")
+		bclogger.FATALMSG("Address is not Valid")
 	}
 	chain := blockchain.ContinueBlockChain(nodeID)
 	UTXOSet := blockchain.UTXOSet{Blockchain: chain}
@@ -144,7 +145,7 @@ func (cli *CommandLine) send(from, to string, amount int, nodeID string, mineNow
 
 	wallets, err := wallet.CreateWallets(nodeID)
 	if err != nil {
-		log.Panic(err)
+		bclogger.FATALMSG(err)
 	}
 	wallet := wallets.GetWallet(from)
 
@@ -156,10 +157,10 @@ func (cli *CommandLine) send(from, to string, amount int, nodeID string, mineNow
 		UTXOSet.Update(block)
 	} else {
 		network.SendTx(network.KnownNodes[0], tx)
-		fmt.Println("send tx")
+		bclogger.INFOMSG("send tx")
 	}
 
-	fmt.Println("Success!")
+	bclogger.INFOMSG("Success!")
 }
 
 func (cli *CommandLine) Run() {
@@ -167,7 +168,7 @@ func (cli *CommandLine) Run() {
 
 	nodeID := os.Getenv("NODE_ID")
 	if nodeID == "" {
-		fmt.Printf("NODE_ID env is not set!")
+		bclogger.ERRORMSG("NODE_ID env is not set!")
 		runtime.Goexit()
 	}
 

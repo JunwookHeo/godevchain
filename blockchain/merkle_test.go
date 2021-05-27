@@ -1,14 +1,17 @@
 package blockchain
 
 import (
-	"fmt"
 	"testing"
 
+	"github.com/JunwookHeo/godevchain/bclogger"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewMerkleNode(t *testing.T) {
+	bclogger.Init(false)
+
 	data := [][]byte{
+		[]byte("node0"),
 		[]byte("node1"),
 		[]byte("node2"),
 		[]byte("node3"),
@@ -16,36 +19,67 @@ func TestNewMerkleNode(t *testing.T) {
 		[]byte("node5"),
 		[]byte("node6"),
 		[]byte("node7"),
+		[]byte("node8"),
 	}
 
 	// level 1
-	mn1 := NewMerkleNode(nil, nil, data[0])
-	mn2 := NewMerkleNode(nil, nil, data[1])
-	mn3 := NewMerkleNode(nil, nil, data[2])
-	mn4 := NewMerkleNode(nil, nil, data[3])
-	mn5 := NewMerkleNode(nil, nil, data[4])
-	mn6 := NewMerkleNode(nil, nil, data[5])
-	mn7 := NewMerkleNode(nil, nil, data[6])
-	mn8 := NewMerkleNode(nil, nil, data[6])
+	mn1 := CalHashSha256(data[0])
+	mn2 := CalHashSha256(data[1])
+	mn3 := CalHashSha256(data[2])
+	mn4 := CalHashSha256(data[3])
+	mn5 := CalHashSha256(data[4])
+	mn6 := CalHashSha256(data[5])
+	mn7 := CalHashSha256(data[6])
+	mn8 := CalHashSha256(data[7])
+	mn9 := CalHashSha256(data[8])
+	mn10 := CalHashSha256(data[8])
 
 	// level 2
-	mn9 := NewMerkleNode(mn1, mn2, nil)
-	mn10 := NewMerkleNode(mn3, mn4, nil)
-	mn11 := NewMerkleNode(mn5, mn6, nil)
-	mn12 := NewMerkleNode(mn7, mn8, nil)
+	mn11 := CalMerkleNodeHash(mn1, mn2)
+	mn12 := CalMerkleNodeHash(mn3, mn4)
+	mn13 := CalMerkleNodeHash(mn5, mn6)
+	mn14 := CalMerkleNodeHash(mn7, mn8)
+	mn15 := CalMerkleNodeHash(mn9, mn10)
+	mn16 := CalMerkleNodeHash(mn9, mn10)
 
 	//level 3
 
-	mn13 := NewMerkleNode(mn9, mn10, nil)
-	mn14 := NewMerkleNode(mn11, mn12, nil)
+	mn17 := CalMerkleNodeHash(mn11, mn12)
+	mn18 := CalMerkleNodeHash(mn13, mn14)
+	mn19 := CalMerkleNodeHash(mn15, mn16)
+	mn20 := CalMerkleNodeHash(mn15, mn16)
 
 	//level 4
 
-	mn15 := NewMerkleNode(mn13, mn14, nil)
+	mn21 := CalMerkleNodeHash(mn17, mn18)
+	mn22 := CalMerkleNodeHash(mn19, mn20)
 
-	root := fmt.Sprintf("%x", mn15.Data)
-	tree := NewMerkleTree(data)
+	//level 5
 
-	assert.Equal(t, root, fmt.Sprintf("%x", tree.RootNode.Data), "Merkle node root has is equal")
+	mn23 := CalMerkleNodeHash(mn21, mn22)
 
+	root := mn23
+	root2 := CalMerklRootHash(data)
+
+	assert.Equal(t, root, root2, "Merkle node root has is equal")
+
+}
+
+func TestNewMerkleNode2(t *testing.T) {
+	data := [][]byte{
+		[]byte("node0"),
+	}
+
+	// level 1
+	mn1 := CalHashSha256(data[0])
+	mn2 := CalHashSha256(data[0])
+
+	// level 2
+	mn3 := CalMerkleNodeHash(mn1, mn2)
+
+	root := mn3
+
+	root2 := CalMerklRootHash(data)
+
+	assert.Equal(t, root, root2, "Merkle node root has is equal")
 }

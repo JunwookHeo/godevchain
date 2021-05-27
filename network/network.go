@@ -10,12 +10,11 @@ import (
 	"log"
 	"net"
 	"os"
+	"os/signal"
 	"runtime"
+	"syscall"
 
-	SYS "syscall"
-
-	DEATH "github.com/vrecan/death"
-
+	"github.com/JunwookHeo/godevchain/bclogger"
 	"github.com/JunwookHeo/godevchain/blockchain"
 )
 
@@ -122,7 +121,7 @@ func SendData(addr string, data []byte) {
 	conn, err := net.Dial(protocol, addr)
 
 	if err != nil {
-		fmt.Printf("%s is not available\n", addr)
+		bclogger.WARNMSGF("%s is not available\n", addr)
 		var updatedNodes []string
 
 		for _, node := range KnownNodes {
@@ -196,7 +195,7 @@ func HandleAddr(request []byte) {
 	}
 
 	KnownNodes = append(KnownNodes, payload.AddrList...)
-	fmt.Printf("there are %d known nodes\n", len(KnownNodes))
+	bclogger.INFOMSGF("there are %d known nodes\n", len(KnownNodes))
 	RequestBlocks()
 }
 
@@ -214,10 +213,10 @@ func HandleBlock(request []byte, chain *blockchain.BlockChain) {
 	blockData := payload.Block
 	block := blockchain.Deserialize(blockData)
 
-	fmt.Println("Recevied a new block!")
+	bclogger.INFOMSG("Recevied a new block!")
 	chain.AddBlock(block)
 
-	fmt.Printf("Added block %x\n", block.Hash)
+	bclogger.INFOMSGF("Added block %x\n", block.Hash)
 
 	if len(blocksInTransit) > 0 {
 		blockHash := blocksInTransit[0]
@@ -241,7 +240,7 @@ func HandleInv(request []byte, chain *blockchain.BlockChain) {
 		log.Panic(err)
 	}
 
-	fmt.Printf("Recevied inventory with %d %s\n", len(payload.Items), payload.Type)
+	bclogger.INFOMSGF("Recevied inventory with %d %s\n", len(payload.Items), payload.Type)
 
 	if payload.Type == "block" {
 		blocksInTransit = payload.Items
@@ -325,7 +324,7 @@ func HandleTx(request []byte, chain *blockchain.BlockChain) {
 	tx := blockchain.DeserializeTransaction(txData)
 	memoryPool[hex.EncodeToString(tx.ID)] = tx
 
-	fmt.Printf("%s, %d", nodeAddress, len(memoryPool))
+	bclogger.INFOMSGF("%s, %d", nodeAddress, len(memoryPool))
 
 	if nodeAddress == KnownNodes[0] {
 		for _, node := range KnownNodes {
@@ -344,7 +343,7 @@ func MineTx(chain *blockchain.BlockChain) {
 	var txs []*blockchain.Transaction
 
 	for id := range memoryPool {
-		fmt.Printf("tx: %s\n", memoryPool[id].ID)
+		bclogger.INFOMSGF("tx: %s\n", memoryPool[id].ID)
 		tx := memoryPool[id]
 		if chain.VerifyTransaction(&tx) {
 			txs = append(txs, &tx)
@@ -352,7 +351,7 @@ func MineTx(chain *blockchain.BlockChain) {
 	}
 
 	if len(txs) == 0 {
-		fmt.Println("All Transactions are invalid")
+		bclogger.WARNMSG("All Transactions are invalid")
 		return
 	}
 
@@ -363,7 +362,7 @@ func MineTx(chain *blockchain.BlockChain) {
 	UTXOSet := blockchain.UTXOSet{Blockchain: chain}
 	UTXOSet.Reindex()
 
-	fmt.Println("New Block mined")
+	bclogger.INFOMSG("New Block mined")
 
 	for _, tx := range txs {
 		txID := hex.EncodeToString(tx.ID)
@@ -414,7 +413,7 @@ func HandleConnection(conn net.Conn, chain *blockchain.BlockChain) {
 		log.Panic(err)
 	}
 	command := BytesToCmd(req[:commandLength])
-	fmt.Printf("Received %s command\n", command)
+	bclogger.INFOMSGF("Received %s command\n", command)
 
 	switch command {
 	case "addr":
@@ -432,7 +431,7 @@ func HandleConnection(conn net.Conn, chain *blockchain.BlockChain) {
 	case "version":
 		HandleVersion(req, chain)
 	default:
-		fmt.Println("Unknown command")
+		bclogger.WARNMSG("Unknown command")
 	}
 
 }
@@ -486,12 +485,20 @@ func NodeIsKnown(addr string) bool {
 }
 
 func CloseDB(chain *blockchain.BlockChain) {
-	d := DEATH.NewDeath(SYS.SIGINT, SYS.SIGTERM)
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM, syscall.SIGINT)
 
-	d.WaitForDeathWithFunc(func() {
-		defer os.Exit(1)
-		defer runtime.Goexit()
-		chain.Database.Close()
-		fmt.Printf("Closed DB!!")
-	})
+	go func() {
+		for sig := range c {
+			// sig is a ^C, handle it
+			if sig == syscall.SIGTERM || sig == syscall.SIGINT {
+				defer os.Exit(1)
+				defer runtime.Goexit()
+
+				chain.Database.Close()
+				bclogger.INFOMSG("Closed DB!!")
+				break
+			}
+		}
+	}()
 }

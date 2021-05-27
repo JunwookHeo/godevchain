@@ -6,12 +6,12 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
 
+	"github.com/JunwookHeo/godevchain/bclogger"
 	"github.com/dgraph-io/badger"
 )
 
@@ -36,7 +36,7 @@ func DBexists(path string) bool {
 func ContinueBlockChain(nodeId string) *BlockChain {
 	path := fmt.Sprintf(dbPath, nodeId)
 	if DBexists(path) == false {
-		fmt.Println("No existing blockchain found, create one!")
+		bclogger.WARNMSG("No existing blockchain found, create one!")
 		runtime.Goexit()
 	}
 
@@ -64,7 +64,7 @@ func ContinueBlockChain(nodeId string) *BlockChain {
 func InitBlockChain(address, nodeId string) *BlockChain {
 	path := fmt.Sprintf(dbPath, nodeId)
 	if DBexists(path) {
-		fmt.Println("Blockchain already exists")
+		bclogger.WARNMSG("Blockchain already exists")
 		runtime.Goexit()
 	}
 	var lastHash []byte
@@ -77,7 +77,7 @@ func InitBlockChain(address, nodeId string) *BlockChain {
 	err = db.Update(func(txn *badger.Txn) error {
 		cbtx := CoinbaseTx(address, genesisData)
 		genesis := Genesis(cbtx)
-		fmt.Println("Genesis created")
+		bclogger.INFOMSG("Genesis created")
 		err = txn.Set(genesis.Hash, genesis.Serialize())
 		Handle(err)
 		err = txn.Set([]byte("lh"), genesis.Hash)
@@ -195,7 +195,7 @@ func (chain *BlockChain) MineBlock(transactions []*Transaction) *Block {
 
 	for _, tx := range transactions {
 		if chain.VerifyTransaction(tx) != true {
-			log.Panic("Invalid Transaction")
+			bclogger.FATALMSG("Invalid Transaction")
 		}
 	}
 
@@ -335,10 +335,10 @@ func openDB(dir string, opts badger.Options) (*badger.DB, error) {
 	if db, err := badger.Open(opts); err != nil {
 		if strings.Contains(err.Error(), "LOCK") {
 			if db, err := retry(dir, opts); err == nil {
-				log.Println("database unlocked, value log truncated")
+				bclogger.INFOMSG("database unlocked, value log truncated")
 				return db, nil
 			}
-			log.Println("could not unlock database:", err)
+			bclogger.WARNMSG("could not unlock database:", err)
 		}
 		return nil, err
 	} else {

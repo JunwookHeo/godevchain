@@ -2,64 +2,50 @@ package blockchain
 
 import (
 	"crypto/sha256"
-	"log"
+
+	"github.com/JunwookHeo/godevchain/bclogger"
 )
 
-type MerkleTree struct {
-	RootNode *MerkleNode
+func CalHashSha256(data []byte) []byte {
+	hash := sha256.Sum256(data)
+	return hash[:]
 }
 
-type MerkleNode struct {
-	Left  *MerkleNode
-	Right *MerkleNode
-	Data  []byte
+func CalMerkleNodeHash(l, r []byte) []byte {
+	return CalHashSha256(append(l, r...))
 }
 
-func NewMerkleNode(left, right *MerkleNode, data []byte) *MerkleNode {
-	node := MerkleNode{}
+func CalMerkleUpperHashs(hashes [][]byte) [][]byte {
+	var mtns [][]byte
 
-	if left == nil && right == nil {
-		hash := sha256.Sum256(data)
-		node.Data = hash[:]
-	} else {
-		prevHashes := append(left.Data, right.Data...)
-		hash := sha256.Sum256(prevHashes)
-		node.Data = hash[:]
+	if len(hashes)%2 == 1 {
+		hashes = append(hashes, hashes[len(hashes)-1])
 	}
 
-	node.Left = left
-	node.Right = right
+	for i := 0; i < len(hashes); i += 2 {
+		node := CalMerkleNodeHash(hashes[i], hashes[i+1])
+		mtns = append(mtns, node)
+	}
 
-	return &node
+	return mtns
 }
 
-func NewMerkleTree(data [][]byte) *MerkleTree {
-	var nodes []MerkleNode
+func CalMerklRootHash(data [][]byte) []byte {
+	var mtns [][]byte
 
-	for _, dat := range data {
-		node := NewMerkleNode(nil, nil, dat)
-		nodes = append(nodes, *node)
+	for _, n := range data {
+		node := CalHashSha256(n)
+		mtns = append(mtns, node)
 	}
 
-	if len(nodes) == 0 {
-		log.Panic("No merkel nodes")
-	}
-
-	for len(nodes) > 1 {
-		if len(nodes)%2 != 0 {
-			nodes = append(nodes, nodes[len(nodes)-1])
+	for {
+		mtns = CalMerkleUpperHashs(mtns)
+		if len(mtns) == 1 {
+			break
 		}
-
-		var level []MerkleNode
-		for i := 0; i < len(nodes); i += 2 {
-			node := NewMerkleNode(&nodes[i], &nodes[i+1], nil)
-			level = append(level, *node)
-		}
-
-		nodes = level
 	}
 
-	tree := MerkleTree{&nodes[0]}
+	bclogger.INFOMSGF("%x\n", mtns)
 
-	return &tree
+	return mtns[0]
 }
