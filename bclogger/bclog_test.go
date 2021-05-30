@@ -17,5 +17,5 @@ func TestLogger(t *testing.T) {
 	ERRORMSGF("Error Test %d\n", x)
 
 	//FATALMSG("Fatal")
-	FATALMSGF("Fatal Test %d\n", x)
+	//FATALMSGF("Fatal Test %d\n", x)
 }

@@ -169,7 +169,8 @@ func (cli *CommandLine) Run() {
 	nodeID := os.Getenv("NODE_ID")
 	if nodeID == "" {
 		bclogger.ERRORMSG("NODE_ID env is not set!")
-		runtime.Goexit()
+		//runtime.Goexit()
+		nodeID = "5000"
 	}
 
 	getBalanceCmd := flag.NewFlagSet("getbalance", flag.ExitOnError)

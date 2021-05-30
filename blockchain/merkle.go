@@ -2,8 +2,6 @@ package blockchain
 
 import (
 	"crypto/sha256"
-
-	"github.com/JunwookHeo/godevchain/bclogger"
 )
 
 func CalHashSha256(data []byte) []byte {
@@ -45,7 +43,7 @@ func CalMerklRootHash(data [][]byte) []byte {
 		}
 	}
 
-	bclogger.INFOMSGF("%x\n", mtns)
+	// bclogger.INFOMSGF("%x\n", mtns)
 
 	return mtns[0]
 }
